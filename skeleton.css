@@ -405,7 +405,7 @@ there.
 
 /* Larger than mobile */
 @media (min-width: 400px) {}
-
+    
 /* Larger than phablet (also point when grid becomes active) */
 @media (min-width: 550px) {}
 
@@ -444,46 +444,57 @@ there.
 }
 
 #home:hover{
-    content: url(images/resistor.svg);
-    display: block;
-    max-height: 50px;
+   text-shadow: 2px 2px #E5E5E5;
 }
 
 #archive:hover{
-    content: url(images/inductor.svg);
-    display: block;
-    max-height: 50px;
+    text-shadow: 2px 2px #E5E5E5;
 }
 
 #capacitor:hover{
-    content: url(images/capacitor.svg);
-    display: block;
-    max-height: 50px;
+    text-shadow: 2px 2px #E5E5E5;
 }
 
 #search{
-    background: url(images/mag_glass.svg);
-    background-position: right;
-    background-repeat: no-repeat;
     position: relative;
-    top: -7px;
     text-align: center;
     border: 1px solid rgba(0, 0, 0, .05);
     color: #000000;
+    max-height: 25px;
+    max-width: 70%;
+    float: left;
+}
+
+#search-form{
+    float: left;
 }
 
 #search::-webkit-input-placeholder {
    color: #000000;
+
 }
 
 #search:-moz-placeholder { /* Firefox 18- */
    color: #000000;  
+   text-shadow: 
 }
 
 #search::-moz-placeholder {  /* Firefox 19+ */
    color: #000000;  
+   background: rgba(225, 225, 225, .5);
 }
 
 #search:-ms-input-placeholder {  
-   color: #000000;  
+   color: #000000;
+   background: rgba(225, 225, 225, .5);
+}
+
+#submit{
+    background: url(images/mag_glass.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    max-height: 25px;
+    max-width: 25%;
+    border: none;
+    float: left;
 }
