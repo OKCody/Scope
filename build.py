@@ -1,6 +1,10 @@
-pageContent = open('content/index.html', 'r')
+import bleach
+import sys
+
+pageContent = open(sys.argv[1], 'r')
 pageContent = pageContent.read()
-page = open('index.html', 'a')
+#pageContent = bleach.clean(pageContent, '<p>','</p>')
+page = open('../' + sys.argv[1], 'a')
 
 
     

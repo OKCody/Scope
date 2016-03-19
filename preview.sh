@@ -1,3 +1,6 @@
-rm index.html
-python build.py
-open index.html
+rm *.html
+cd content
+for filename in *.html
+do
+python3 ../build.py $filename
+done
