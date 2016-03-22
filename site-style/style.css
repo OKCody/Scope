@@ -1,0 +1,228 @@
+/* Header
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.menu{
+    position: relative;
+    top: 10;
+    padding: 9;
+    text-align: center;
+    font-weight: bold;   
+    color: #000000;
+}
+
+.logo{
+    background: url(site-images/signature.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    min-height: 190px;
+}
+
+.main{
+    position: relative;
+    top: 40px;
+}
+
+#home:hover{
+   text-shadow: 2px 2px #E5E5E5;
+}
+
+#archive:hover{
+    text-shadow: 2px 2px #E5E5E5;
+}
+
+#about:hover{
+    text-shadow: 2px 2px #E5E5E5;
+}
+
+#search{
+    position: relative;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, .05);
+    color: #000000;
+    max-height: 25px;
+    max-width: 67%;
+    float: left;
+}
+
+#search-form{
+    float: left;
+}
+
+#search::-webkit-input-placeholder {
+   color: #000000;
+
+}
+
+#search:-moz-placeholder { /* Firefox 18- */
+   color: #000000;  
+   text-shadow: 
+}
+
+#search::-moz-placeholder {  /* Firefox 19+ */
+   color: #000000;  
+   background: rgba(225, 225, 225, .5);
+}
+
+#search:-ms-input-placeholder {  
+   color: #000000;
+   background: rgba(225, 225, 225, .5);
+}
+
+#submit{
+    background: url(site-images/mag_glass.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    max-height: 25px;
+    max-width: 20%;
+    border: none;
+    float: left;
+}
+/*–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+
+
+/* Footer
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.footer{
+    display: block;
+    margin-top: 80px;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 30px;
+}
+
+.license{
+
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: 30px 30px !important;
+    height: 30px !important;
+    width: 30px !important;
+    margin-left: 1px;
+    margin-right: 1px;
+    float: left;
+    position: relative;
+    left: calc(50% - ( 3 / 2.0 ) * 32px);
+    /*License images are 30x30px + 1px left & right margins = 32px wide*/
+    /*To horizontally center icons on page:*/
+    /*calc(horizontal_center - (number of icons used / 2.0) * icon_width)*/
+}
+
+
+/*To use an icon:      display: block;*/
+/*To not use an icon:  display: none;*/
+
+#cc{
+    display: block;
+    background: url(site-images/license/cc.svg);
+}
+
+#by{
+    display: block;
+    background: url(site-images/license/by.svg);
+}
+
+#nc{
+    display: none;
+    background: url(site-images/license/nc.svg);
+}
+
+#nd{
+    display: none;
+    background: url(site-images/license/nd.svg);
+}
+
+#sa{
+    display: block;
+    background: url(site-images/license/sa.svg);
+}
+
+#nc-eu{
+    display: none;
+    background: url(site-images/license/nc-eu.svg);
+}
+
+#nc-jp{
+    display: none;
+    background: url(site-images/license/nc-jp.svg);
+}
+
+#pd{
+    display: none;
+    background: url(site-images/license/pd.svg);
+}
+
+#remix{
+    display: none;
+    background: url(site-images/license/remix.svg);
+}
+
+#sampling-plus{
+    display: none;
+    background: url(site-images/license/sampling-plus.svg);
+}
+
+#sampling{
+    display: none;
+    background: url(site-images/license/sampling.svg);
+}
+
+#share{
+    display: none;
+    background: url(site-images/license/share.svg);
+}
+
+#zero{
+    display: none;
+    background: url(site-images/license/zero.svg);
+}
+
+.rss{
+    display: block;
+    background: url(site-images/rss.svg);
+    background-position: right !important;
+    background-repeat: no-repeat !important;
+    background-size: 10px 10px !important;
+    height: 30px;
+    width: 30px;
+    position: relative;
+    left: 95%;
+}
+
+.rss:hover{
+    background: url(site-images/alt-rss.svg);
+}
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+
+
+/* Images
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+img{
+    display: block;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+/*–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* iFrame
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+iframe{
+    display: block;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+/*–––––––––––––––––––––––––––––––––––––––––––––––––– */
