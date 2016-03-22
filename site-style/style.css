@@ -11,7 +11,7 @@
 }
 
 .logo{
-    background: url(site-images/signature.png);
+    background: url(../site-images/signature.png);
     background-position: center;
     background-repeat: no-repeat;
     display: block;
@@ -74,7 +74,7 @@
 }
 
 #submit{
-    background: url(site-images/mag_glass.svg);
+    background: url(../site-images/mag_glass.svg);
     background-position: center;
     background-repeat: no-repeat;
     max-height: 25px;
@@ -120,72 +120,72 @@
 
 #cc{
     display: block;
-    background: url(site-images/license/cc.svg);
+    background: url(../site-images/license/cc.svg);
 }
 
 #by{
     display: block;
-    background: url(site-images/license/by.svg);
+    background: url(../site-images/license/by.svg);
 }
 
 #nc{
     display: none;
-    background: url(site-images/license/nc.svg);
+    background: url(../site-images/license/nc.svg);
 }
 
 #nd{
     display: none;
-    background: url(site-images/license/nd.svg);
+    background: url(../site-images/license/nd.svg);
 }
 
 #sa{
     display: block;
-    background: url(site-images/license/sa.svg);
+    background: url(../site-images/license/sa.svg);
 }
 
 #nc-eu{
     display: none;
-    background: url(site-images/license/nc-eu.svg);
+    background: url(../site-images/license/nc-eu.svg);
 }
 
 #nc-jp{
     display: none;
-    background: url(site-images/license/nc-jp.svg);
+    background: url(../site-images/license/nc-jp.svg);
 }
 
 #pd{
     display: none;
-    background: url(site-images/license/pd.svg);
+    background: url(../site-images/license/pd.svg);
 }
 
 #remix{
     display: none;
-    background: url(site-images/license/remix.svg);
+    background: url(../site-images/license/remix.svg);
 }
 
 #sampling-plus{
     display: none;
-    background: url(site-images/license/sampling-plus.svg);
+    background: url(../site-images/license/sampling-plus.svg);
 }
 
 #sampling{
     display: none;
-    background: url(site-images/license/sampling.svg);
+    background: url(../site-images/license/sampling.svg);
 }
 
 #share{
     display: none;
-    background: url(site-images/license/share.svg);
+    background: url(../site-images/license/share.svg);
 }
 
 #zero{
     display: none;
-    background: url(site-images/license/zero.svg);
+    background: url(../site-images/license/zero.svg);
 }
 
 .rss{
     display: block;
-    background: url(site-images/rss.svg);
+    background: url(../site-images/rss.svg);
     background-position: right !important;
     background-repeat: no-repeat !important;
     background-size: 10px 10px !important;
@@ -196,7 +196,7 @@
 }
 
 .rss:hover{
-    background: url(site-images/alt-rss.svg);
+    background: url(../site-images/alt-rss.svg);
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––– */
