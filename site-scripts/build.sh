@@ -15,5 +15,6 @@ do
   cat ../site-template/head.html $filename ../site-template/tail.html > ../content/$filename
 
 #find "<title></title>" in previously created file. replace with <title>$filename</title>
-  sed -i "s/<title><\/title>/<title>$filename<\/title>/g" ../content/$filename
+#replace underscores with spaces and remove ".html" from end of filename
+  sed -i "s/<title><\/title>/<title>${filename//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" ../content/$filename
 done
