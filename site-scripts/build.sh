@@ -31,8 +31,12 @@ index=$(ls content/ | tail -n1)
 cp content/$index index.html
 #concatenate contents of head.html, $filename.html, and tail.html and write to
 #file in archive directory
-cat site-template/head.html index.html site-template/tail.html > index.html
+#cat site-template/head.html content/$index site-template/tail.html > index.html
 sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" index.html
+#change path to /site-style as it is different for index.html than it is for all other pages.
+sed -i "s/..\/site-style\/normalize.css/site-style\/normalize.css/g" index.html
+sed -i "s/..\/site-style\/skeleton.css/site-style\/skeleton.css/g" index.html
+sed -i "s/..\/site-style\/style.css/site-style\/style.css/g" index.html
 
 cd content
 for filename in *.html
