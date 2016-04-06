@@ -17,10 +17,10 @@ font-size: 14pt; }
 
 /* Headings */
 h1,h2,h3,h4,h5,h6 { page-break-after:avoid; }
-h1{font-size:19pt;}
-h2{font-size:17pt;}
-h3{font-size:15pt;}
-h4,h5,h6{font-size:14pt;}
+h1{font-size:18pt;}
+h2{font-size:16pt;}
+h3{font-size:14pt;}
+h4,h5,h6{font-size:13pt;}
 
 
 p, h2, h3 { orphans: 3; widows: 3; }

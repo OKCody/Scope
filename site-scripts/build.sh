@@ -1,20 +1,24 @@
 #all commands are understood to be executed from root of site
 #loop are executed from within a given directory and exited upon completion
 
-
+#--------------------------------Cleaning up------------------------------------
 #delete site-content directory, will be recreated when cloned
 #delete contents of /contents
 rm -rf site-content
 rm -rf content
 mkdir content
 rm index.html
+#-------------------------------------------------------------------------------
 
+#--------------------------Clone pages from GitHub------------------------------
 #pull down most current version of all site entries
 git clone http://github.com/OKCody/Pages
 
 #rename cloned directory to fit schema
 mv Pages site-content
+#-------------------------------------------------------------------------------
 
+#----------------------------Create index.html----------------------------------
 cd site-content
 for filename in *.html
 do
@@ -38,7 +42,9 @@ sed -i "" "s/..\/site-style\/normalize.css/site-style\/normalize.css/g" index.ht
 sed -i "" "s/..\/site-style\/skeleton.css/site-style\/skeleton.css/g" index.html
 sed -i "" "s/..\/site-style\/style.css/site-style\/style.css/g" index.html
 sed -i "" "s/..\/site-style\/print.css/site-style\/print.css/g" index.html
+#-------------------------------------------------------------------------------
 
+#-------------------------Prepare public-facing pages---------------------------
 cd content
 for filename in *.html
 do
@@ -58,3 +64,21 @@ do
   sed -i "" "s/<title><\/title>/<title>${filename//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $filename
 done
 cd ..
+#-------------------------------------------------------------------------------
+
+#------------------Generate PDFs of .html pages in content/---------------------
+mkdir PDFs
+
+cd content
+for filename in *.html
+do
+  #necessary because wkhtmltopdf won't use print.css otherwise
+  sed -i "" "s/..\/site-style\/style.css/..\/site-style\/print.css/g" $filename
+done
+
+for filename in *.html
+do
+  wkhtmltopdf --viewport-size 1280x1024 --disable-smart-shrinking $filename ../PDFs/${filename%.html}.pdf
+done
+cd ..
+#-------------------------------------------------------------------------------
