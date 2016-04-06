@@ -19,3 +19,6 @@ This tool depends on the use of sed.  Sed is included in Linux distributions but
 `export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"`
 
 included in coreutils is gnused, in the last line command we remove the gnu prefix in order to use is as we would on a Linux system.
+
+## Dependencies
+Depends on wkhtmltopdf for generating PDFs. 
