@@ -18,6 +18,15 @@ git clone http://github.com/OKCody/Pages
 mv Pages site-content
 #-------------------------------------------------------------------------------
 
+#---------------------------Home directory prep.--------------------------------
+mv site-style/ content/
+mv content/site-style content/style
+mv site-images/ content/
+#-------------------------------------------------------------------------------
+
+ls content
+echo "checkpoint 1"
+
 #----------------------------Create index.html----------------------------------
 cd site-content
 for filename in *.html
@@ -31,22 +40,23 @@ cd ..
 #create index.html from most recent file in /content based on date at front of filename
 #yyyymmmdd_filename.html
 #prepending date to filename in this way forces most recent page to bottom of ls
-index=$(ls content/ | tail -n1)
-cp content/$index index.html
-#concatenate contents of head.html, $filename.html, and tail.html and write to
-#file in archive directory
-#cat site-template/head.html content/$index site-template/tail.html > index.html
-sed -i "" "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" index.html
+index=$(ls content/*.html | tail -n1)
+mv $index content/index.html
+
+sed -i "" "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" content/index.html
 #change path to /site-style as it is different for index.html than it is for all other pages.
-sed -i "" "s/..\/site-style\/normalize.css/site-style\/normalize.css/g" index.html
-sed -i "" "s/..\/site-style\/skeleton.css/site-style\/skeleton.css/g" index.html
-sed -i "" "s/..\/site-style\/style.css/site-style\/style.css/g" index.html
-sed -i "" "s/..\/site-style\/print.css/site-style\/print.css/g" index.html
+sed -i "" "s/..\/style\/normalize.css/style\/normalize.css/g" content/index.html
+sed -i "" "s/..\/style\/skeleton.css/style\/skeleton.css/g" content/index.html
+sed -i "" "s/..\/style\/style.css/style\/style.css/g" content/index.html
+sed -i "" "s/..\/style\/print.css/style\/print.css/g" content/index.html
 #-------------------------------------------------------------------------------
 
-#-------------------------Prepare public-facing pages---------------------------
+ls content
+echo "checkpoint 2"
+
+#--------------------Prepare public-facing pages and PDFs-----------------------
 cd content
-for filename in *.html
+for filename in [!index.html]*.html
 do
   #remove dates from front of filenames in content/
   #from
@@ -54,31 +64,23 @@ do
   #to
   #filename.html
   #dates on filenames in site-content/ do not matter (not public facing)
-  mv $filename ${filename:9}
-done
-
-for filename in *.html
-do
+  newname=${filename:9}
+  newname=${newname%.html}
+  mkdir $newname
+  mv $filename $newname/index.html
   #find "<title></title>" in previously created file. replace with <title>$filename</title>
   #replace underscores with spaces and remove ".html" from end of filename
-  sed -i "" "s/<title><\/title>/<title>${filename//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $filename
-done
-cd ..
-#-------------------------------------------------------------------------------
-
-#------------------Generate PDFs of .html pages in content/---------------------
-mkdir PDFs
-
-cd content
-for filename in *.html
-do
+  sed -i "" "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
   #necessary because wkhtmltopdf won't use print.css otherwise
-  sed -i "" "s/..\/site-style\/style.css/..\/site-style\/print.css/g" $filename
-done
-
-for filename in *.html
-do
-  wkhtmltopdf --viewport-size 1280x1024 --disable-smart-shrinking $filename ../PDFs/${filename%.html}.pdf
+  sed -i "" "s/..\/style\/style.css/..\/style\/print.css/g" $newname/index.html
+  wkhtmltopdf --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
+  #The following is ahack to replace names of stylesheets to their proper form.
+  #Prior is only so that wkhtmltopdf will use the print.css instead of style.css
+  sed -i "" "s/..\/style\/print.css/..\/style\/style.css/g" $newname/index.html
+  sed -i "" "s/..\/style\/style.css media=/..\/style\/print.css media=/g" $newname/index.html
 done
 cd ..
 #-------------------------------------------------------------------------------
+
+ls content
+echo "checkpoint 3"
