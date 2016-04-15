@@ -16,6 +16,14 @@ git clone http://github.com/OKCody/Pages
 
 #rename cloned directory to fit schema
 mv Pages site-content
+
+cd site-content
+#run markdown.pl script to convert .md files to .html
+for filename in *.md
+do
+  perl ../site-scripts/Markdown.pl $filename > ${filename%.md}.html
+done
+cd ..
 #-------------------------------------------------------------------------------
 
 #---------------------------Home directory prep.--------------------------------
