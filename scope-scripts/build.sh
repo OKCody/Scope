@@ -5,7 +5,7 @@
 echo "Cleaning up Scope/ ..."
 
 #delete site-content directory, w ill be recreated when cloned
-#delete contents of /contents
+#delete contents of /root
 rm -rf site-content
 rm -rf root
 mkdir root
@@ -28,36 +28,36 @@ cd site-content
 #run markdown.pl script to convert .md files to .html
 for filename in *.md
 do
-  perl ../site-scripts/Markdown.pl $filename > ${filename%.md}.html
+  perl ../scope-scripts/Markdown.pl $filename > ${filename%.md}.html
 done
 cd ..
 #-------------------------------------------------------------------------------
 
 #---------------------------Home directory prep.--------------------------------
 echo "Copying dependent files into root directory..."
-#copy style and images from Scope/ into content/ to be pushed to server
+#copy style and images from Scope/ into root/ to be pushed to server
 mkdir root/style
-mkdir root/site-images
-mkdir root/site-images/license
+mkdir root/scope-images
+mkdir root/scope-images/license
 
-cd site-style
+cd scope-style
 for filename in *.css
 do
   cp $filename ../root/style/$filename
 done
 cd ..
 
-cd site-images
+cd scope-images
 for filename in *.???
 do
-  cp $filename ../root/site-images/$filename
+  cp $filename ../root/scope-images/$filename
 done
 cd ..
 
-cd site-images/license
+cd scope-images/license
 for filename in *
 do
-  cp $filename ../../root/site-images/license/$filename
+  cp $filename ../../root/scope-images/license/$filename
 done
 cd ../..
 #-------------------------------------------------------------------------------
@@ -71,18 +71,18 @@ for filename in *.html
 do
   #concatenate contents of head.html, $filename.html, and tail.html and write to
   #file in archive directory
-  cat ../site-template/head.html $filename ../site-template/tail.html > ../root/$filename
+  cat ../scope-template/head.html $filename ../scope-template/tail.html > ../root/$filename
 done
 cd ..
 
-#create index.html from most recent file in /content based on date at front of filename
+#create index.html from most recent file in root/ based on date at front of filename
 #yyyymmmdd_filename.html
 #prepending date to filename in this way forces most recent page to bottom of ls
 index=$(ls root/*.html | tail -n1)
 mv $index root/index.html
 
 sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
-#change path to /site-style as it is different for index.html than it is for all other pages.
+#change path to /scope-style as it is different for index.html than it is for all other pages.
 sed -i "s/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
 sed -i "s/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
 sed -i "s/..\/style\/style.css/style\/style.css/g" root/index.html
@@ -97,7 +97,7 @@ numfiles=$(find -maxdepth 1 -type f | wc -l)
 currentfile=0
 for filename in [!index.html]*.html
 do
-  #remove dates from front of filenames in content/
+  #remove dates from front of filenames in root/
   #from
   #yyyymmmdd_filename.html
   #to
