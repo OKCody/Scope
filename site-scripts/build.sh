@@ -2,20 +2,27 @@
 #loop are executed from within a given directory and exited upon completion
 
 #--------------------------------Cleaning up------------------------------------
-#delete site-content directory, will be recreated when cloned
+echo "Cleaning up Scope/ ..."
+
+#delete site-content directory, w ill be recreated when cloned
 #delete contents of /contents
 rm -rf site-content
 rm -rf content
 mkdir content
-rm index.html
 #-------------------------------------------------------------------------------
 
 #--------------------------Clone pages from GitHub------------------------------
+echo "Cloning Pages/ from Github..."
+
 #pull down most current version of all site entries
-git clone http://github.com/OKCody/Pages
+git clone -q http://github.com/OKCody/Pages
 
 #rename cloned directory to fit schema
 mv Pages site-content
+#-------------------------------------------------------------------------------
+
+#----------------------------.md --> .html--------------------------------------
+echo "Converting .md files to .html ..."
 
 cd site-content
 #run markdown.pl script to convert .md files to .html
@@ -27,15 +34,38 @@ cd ..
 #-------------------------------------------------------------------------------
 
 #---------------------------Home directory prep.--------------------------------
-mv site-style/ content/
-mv content/site-style content/style
-mv site-images/ content/
+echo "Copying dependent files into root directory..."
+#copy style and images from Scope/ into content/ to be pushed to server
+mkdir content/style
+mkdir content/site-images
+mkdir content/site-images/license
+
+cd site-style
+for filename in *.css
+do
+  cp $filename ../content/style/$filename
+done
+cd ..
+
+cd site-images
+for filename in *.???
+do
+  cp $filename ../content/site-images/$filename
+done
+cd ..
+
+cd site-images/license
+for filename in *
+do
+  cp $filename ../../content/site-images/license/$filename
+done
+cd ../..
 #-------------------------------------------------------------------------------
 
-ls content
-echo "checkpoint 1"
 
 #----------------------------Create index.html----------------------------------
+echo "Building index.html ..."
+
 cd site-content
 for filename in *.html
 do
@@ -51,19 +81,20 @@ cd ..
 index=$(ls content/*.html | tail -n1)
 mv $index content/index.html
 
-sed -i "" "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" content/index.html
+sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" content/index.html
 #change path to /site-style as it is different for index.html than it is for all other pages.
-sed -i "" "s/..\/style\/normalize.css/style\/normalize.css/g" content/index.html
-sed -i "" "s/..\/style\/skeleton.css/style\/skeleton.css/g" content/index.html
-sed -i "" "s/..\/style\/style.css/style\/style.css/g" content/index.html
-sed -i "" "s/..\/style\/print.css/style\/print.css/g" content/index.html
+sed -i "s/..\/style\/normalize.css/style\/normalize.css/g" content/index.html
+sed -i "s/..\/style\/skeleton.css/style\/skeleton.css/g" content/index.html
+sed -i "s/..\/style\/style.css/style\/style.css/g" content/index.html
+sed -i "s/..\/style\/print.css/style\/print.css/g" content/index.html
 #-------------------------------------------------------------------------------
 
-ls content
-echo "checkpoint 2"
-
 #--------------------Prepare public-facing pages and PDFs-----------------------
+echo "Creating page directories; index.html and print.pdf for each..."
+
 cd content
+numfiles=$(find -maxdepth 1 -type f | wc -l)
+currentfile=0
 for filename in [!index.html]*.html
 do
   #remove dates from front of filenames in content/
@@ -74,21 +105,22 @@ do
   #dates on filenames in site-content/ do not matter (not public facing)
   newname=${filename:9}
   newname=${newname%.html}
+  let currentfile+=1
+  echo "$currentfile of $numfiles : $newname"
   mkdir $newname
   mv $filename $newname/index.html
   #find "<title></title>" in previously created file. replace with <title>$filename</title>
   #replace underscores with spaces and remove ".html" from end of filename
-  sed -i "" "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
+  sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
   #necessary because wkhtmltopdf won't use print.css otherwise
-  sed -i "" "s/..\/style\/style.css/..\/style\/print.css/g" $newname/index.html
-  wkhtmltopdf --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
+  sed -i "s/..\/style\/style.css/..\/style\/print.css/g" $newname/index.html
+  ##wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
   #The following is ahack to replace names of stylesheets to their proper form.
   #Prior is only so that wkhtmltopdf will use the print.css instead of style.css
-  sed -i "" "s/..\/style\/print.css/..\/style\/style.css/g" $newname/index.html
-  sed -i "" "s/..\/style\/style.css media=/..\/style\/print.css media=/g" $newname/index.html
+  sed -i "s/..\/style\/print.css/..\/style\/style.css/g" $newname/index.html
+  sed -i "s/..\/style\/style.css media=/..\/style\/print.css media=/g" $newname/index.html
 done
 cd ..
 #-------------------------------------------------------------------------------
 
-ls content
-echo "checkpoint 3"
+echo "Done!"
