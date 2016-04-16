@@ -6,12 +6,12 @@
     top: 10;
     padding: 9;
     text-align: center;
-    font-weight: bold;   
+    font-weight: bold;
     color: #000000;
 }
 
 .logo{
-    background: url(../site-images/signature.png);
+    background: url(../scope-images/signature.png);
     background-position: center;
     background-repeat: no-repeat;
     display: block;
@@ -59,22 +59,22 @@
 }
 
 #search:-moz-placeholder { /* Firefox 18- */
-   color: #000000;  
-   text-shadow: 
+   color: #000000;
+   text-shadow:
 }
 
 #search::-moz-placeholder {  /* Firefox 19+ */
-   color: #000000;  
+   color: #000000;
    background: rgba(225, 225, 225, .5);
 }
 
-#search:-ms-input-placeholder {  
+#search:-ms-input-placeholder {
    color: #000000;
    background: rgba(225, 225, 225, .5);
 }
 
 #submit{
-    background: url(../site-images/mag_glass.svg);
+    background: url(../scope-images/mag_glass.svg);
     background-position: center;
     background-repeat: no-repeat;
     max-height: 25px;
@@ -120,72 +120,72 @@
 
 #cc{
     display: block;
-    background: url(../site-images/license/cc.svg);
+    background: url(../scope-images/license/cc.svg);
 }
 
 #by{
     display: block;
-    background: url(../site-images/license/by.svg);
+    background: url(../scope-images/license/by.svg);
 }
 
 #nc{
     display: none;
-    background: url(../site-images/license/nc.svg);
+    background: url(../scope-images/license/nc.svg);
 }
 
 #nd{
     display: none;
-    background: url(../site-images/license/nd.svg);
+    background: url(../scope-images/license/nd.svg);
 }
 
 #sa{
     display: block;
-    background: url(../site-images/license/sa.svg);
+    background: url(../scope-images/license/sa.svg);
 }
 
 #nc-eu{
     display: none;
-    background: url(../site-images/license/nc-eu.svg);
+    background: url(../scope-images/license/nc-eu.svg);
 }
 
 #nc-jp{
     display: none;
-    background: url(../site-images/license/nc-jp.svg);
+    background: url(../scope-images/license/nc-jp.svg);
 }
 
 #pd{
     display: none;
-    background: url(../site-images/license/pd.svg);
+    background: url(../scope-images/license/pd.svg);
 }
 
 #remix{
     display: none;
-    background: url(../site-images/license/remix.svg);
+    background: url(../scope-images/license/remix.svg);
 }
 
 #sampling-plus{
     display: none;
-    background: url(../site-images/license/sampling-plus.svg);
+    background: url(../scope-images/license/sampling-plus.svg);
 }
 
 #sampling{
     display: none;
-    background: url(../site-images/license/sampling.svg);
+    background: url(../scope-images/license/sampling.svg);
 }
 
 #share{
     display: none;
-    background: url(../site-images/license/share.svg);
+    background: url(../scope-images/license/share.svg);
 }
 
 #zero{
     display: none;
-    background: url(../site-images/license/zero.svg);
+    background: url(../scope-images/license/zero.svg);
 }
 
 .rss{
     display: block;
-    background: url(../site-images/rss.svg);
+    background: url(../scope-images/rss.svg);
     background-position: right !important;
     background-repeat: no-repeat !important;
     background-size: 10px 10px !important;
@@ -196,7 +196,7 @@
 }
 
 .rss:hover{
-    background: url(../site-images/alt-rss.svg);
+    background: url(../scope-images/alt-rss.svg);
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––– */

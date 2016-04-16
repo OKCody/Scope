@@ -114,7 +114,7 @@ do
   sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
   #necessary because wkhtmltopdf won't use print.css otherwise
   sed -i "s/..\/style\/style.css/..\/style\/print.css/g" $newname/index.html
-  ##wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
+  #wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
   #The following is ahack to replace names of stylesheets to their proper form.
   #Prior is only so that wkhtmltopdf will use the print.css instead of style.css
   sed -i "s/..\/style\/print.css/..\/style\/style.css/g" $newname/index.html
