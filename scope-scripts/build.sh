@@ -12,7 +12,7 @@ mkdir root
 #-------------------------------------------------------------------------------
 
 #--------------------------Clone pages from GitHub------------------------------
-echo "Cloning Pages/ from Githgitub..."
+echo "Cloning Pages/ from Github..."
 
 #pull down most current version of all site entries
 git clone -q http://github.com/OKCody/Pages
@@ -33,12 +33,13 @@ done
 cd ..
 #-------------------------------------------------------------------------------
 
-#---------------------------Home directory prep.--------------------------------
+#---------------------------Root directory prep.--------------------------------
 echo "Copying dependent files into root directory..."
 #copy style and images from Scope/ into root/ to be pushed to server
 mkdir root/style
 mkdir root/scope-images
 mkdir root/scope-images/license
+mkdir root/archive
 
 cd scope-style
 for filename in *.css
@@ -71,28 +72,28 @@ for filename in *.html
 do
   #concatenate contents of head.html, $filename.html, and tail.html and write to
   #file in archive directory
-  cat ../scope-template/head.html $filename ../scope-template/tail.html > ../root/$filename
+  cat ../scope-template/head.html $filename ../scope-template/tail.html > ../root/archive/$filename
 done
 cd ..
 
 #create index.html from most recent file in root/ based on date at front of filename
 #yyyymmmdd_filename.html
 #prepending date to filename in this way forces most recent page to bottom of ls
-index=$(ls root/*.html | tail -n1)
+index=$(ls root/archive/*.html | tail -n1)
 mv $index root/index.html
 
 sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
 #change path to /scope-style as it is different for index.html than it is for all other pages.
-sed -i "s/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
-sed -i "s/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
-sed -i "s/..\/style\/style.css/style\/style.css/g" root/index.html
-sed -i "s/..\/style\/print.css/style\/print.css/g" root/index.html
+sed -i "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
+sed -i "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
+sed -i "s/..\/..\/style\/style.css/style\/style.css/g" root/index.html
+sed -i "s/..\/..\/style\/print.css/style\/print.css/g" root/index.html
 #-------------------------------------------------------------------------------
 
 #--------------------Prepare public-facing pages and PDFs-----------------------
 echo "Creating page directories; index.html and print.pdf for each..."
 
-cd root
+cd root/archive
 numfiles=$(find -maxdepth 1 -type f | wc -l)
 currentfile=0
 for filename in [!index.html]*.html
@@ -120,7 +121,7 @@ do
   sed -i "s/..\/style\/print.css/..\/style\/style.css/g" $newname/index.html
   sed -i "s/..\/style\/style.css media=/..\/style\/print.css media=/g" $newname/index.html
 done
-cd ..
+cd ../..
 #-------------------------------------------------------------------------------
 
 echo "Done!"
