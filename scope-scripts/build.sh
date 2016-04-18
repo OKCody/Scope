@@ -170,7 +170,6 @@ cd..
 
 #-------------------------------------------------------------------------------
 
-
 #--------------------Prepare public-facing pages and PDFs-----------------------
 echo "Creating page directories; index.html and print.pdf for each..."
 
