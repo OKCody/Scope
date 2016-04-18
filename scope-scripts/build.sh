@@ -148,12 +148,16 @@ sed -i "" "s/..\/..\/style\/print.css/..\/style\/print.css/g" root/archive/index
 #-------------------------------------------------------------------------------
 
 #---------------------------Creating Search Index-------------------------------
+echo "Building search index and search results page..."
+
 mkdir root/tipuesearch
 cp -r tipuesearch/. root/tipuesearch/
+cp root/tipuesearch/search.html root/search.html
 
 echo "var tipuesearch = {\"pages\": [" > root/tipuesearch/tipuesearch_content.js
 
 cd site-content
+
 for filename in *.html
 do
   longfilename=$filename
@@ -161,17 +165,23 @@ do
   filename=${filename%.html}
   address=$filename
   filename=${filename//_/ }
-  echo "  checkpoint!"
-  echo "   {\"title\": \"$filename\", \"text\": \"$(sed -e 's/<[^>]*>//g' $longfilename)\", \"tags\": \"\", \"url\": \"http://$domain/$address\"}," >> ../root/tipuesearch/tipuesearch_content.js
+
+  text=$(sed -e 's/<[^>]*>//g' $longfilename)
+  text=$(echo $text|tr -d '\n')
+  text=$(echo $text|tr -d '"')
+
+  echo "   {\"title\": \"$filename\", \"text\": \"$text\", \"tags\": \"\", \"url\": \"http://$domain/archive/$address\"}," >> ../root/tipuesearch/tipuesearch_content.js
 done
+
 echo "$(sed '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
 echo "]};" >> ../root/tipuesearch/tipuesearch_content.js
-cd..
+
+cd ..
 
 #-------------------------------------------------------------------------------
 
 #--------------------Prepare public-facing pages and PDFs-----------------------
-echo "Creating page directories; index.html and print.pdf for each..."
+echo "Building page directories; index.html and print.pdf for each..."
 
 cd root/archive
 numfiles=$(find . -type f| wc -l)
