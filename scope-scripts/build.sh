@@ -96,10 +96,10 @@ cp $index root/index.html
 
 sed -i "" "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
 #change path to /scope-style as it is different for index.html than it is for all other pages.
-sed -i "" "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
-sed -i "" "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
-sed -i "" "s/..\/..\/style\/style.css/style\/style.css/g" root/index.html
-sed -i "" "s/..\/..\/style\/print.css/style\/print.css/g" root/index.html
+#sed -i "" "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
+#sed -i "" "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
+#sed -i "" "s/..\/..\/style\/style.css/style\/style.css/g" root/index.html
+#sed -i "" "s/..\/..\/style\/print.css/style\/print.css/g" root/index.html
 #-------------------------------------------------------------------------------
 
 #------------------------------Create Archive-----------------------------------
@@ -141,10 +141,10 @@ cd ..
 
 sed -i "" "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
 #change path to /scope-style as it is different for archive/index.html than it is for all other pages.
-sed -i "" "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
-sed -i "" "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
-sed -i "" "s/..\/..\/style\/style.css/..\/style\/style.css/g" root/archive/index.html
-sed -i "" "s/..\/..\/style\/print.css/..\/style\/print.css/g" root/archive/index.html
+#sed -i "" "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
+#sed -i "" "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
+#sed -i "" "s/..\/..\/style\/style.css/..\/style\/style.css/g" root/archive/index.html
+#sed -i "" "s/..\/..\/style\/print.css/..\/style\/print.css/g" root/archive/index.html
 #-------------------------------------------------------------------------------
 
 #---------------------------Creating Search Index-------------------------------
@@ -205,12 +205,12 @@ do
   #replace underscores with spaces and remove ".html" from end of filename
   sed -i "" "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
   #necessary because wkhtmltopdf won't use print.css otherwise
-  sed -i "" "s/..\/style\/style.css/..\/style\/print.css/g" $newname/index.html
+  #sed -i "" "s/..\/style\/style.css/..\/style\/print.css/g" $newname/index.html
   #wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
   #The following is ahack to replace names of stylesheets to their proper form.
   #Prior is only so that wkhtmltopdf will use the print.css instead of style.css
-  sed -i "" "s/..\/style\/print.css/..\/style\/style.css/g" $newname/index.html
-  sed -i "" "s/..\/style\/style.css media=/..\/style\/print.css media=/g" $newname/index.html
+  #sed -i "" "s/..\/style\/print.css/..\/style\/style.css/g" $newname/index.html
+  #sed -i "" "s/..\/style\/style.css media=/..\/style\/print.css media=/g" $newname/index.html
 done
 cd ../..
 #-------------------------------------------------------------------------------
@@ -220,7 +220,7 @@ echo "FTPing to server..."
 
 cd root
 #uploads files despite already existing on server
-#wput --reupload --less-verbose $username:$password@$domain/public_html
+#wput --reupload --less-verbose ftp://$username:$password@$domain/public_html
 cd ..
 
 #-------------------------------------------------------------------------------
