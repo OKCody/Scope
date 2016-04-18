@@ -147,6 +147,29 @@ sed -i "" "s/..\/..\/style\/style.css/..\/style\/style.css/g" root/archive/index
 sed -i "" "s/..\/..\/style\/print.css/..\/style\/print.css/g" root/archive/index.html
 #-------------------------------------------------------------------------------
 
+#---------------------------Creating Search Index-------------------------------
+mkdir root/tipuesearch
+cp -r tipuesearch/. root/tipuesearch/
+
+echo "var tipuesearch = {\"pages\": [" > root/tipuesearch/tipuesearch_content.js
+
+cd site-content
+for filename in *.html
+do
+  longfilename=$filename
+  filename=${filename:9}
+  filename=${filename%.html}
+  address=$filename
+  filename=${filename//_/ }
+  echo "  checkpoint!"
+  echo "   {\"title\": \"$filename\", \"text\": \"$(sed -e 's/<[^>]*>//g' $longfilename)\", \"tags\": \"\", \"url\": \"http://$domain/$address\"}," >> ../root/tipuesearch/tipuesearch_content.js
+done
+echo "$(sed '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
+echo "]};" >> ../root/tipuesearch/tipuesearch_content.js
+cd..
+
+#-------------------------------------------------------------------------------
+
 
 #--------------------Prepare public-facing pages and PDFs-----------------------
 echo "Creating page directories; index.html and print.pdf for each..."
@@ -188,7 +211,7 @@ echo "FTPing to server..."
 
 cd root
 #uploads files despite already existing on server
-wput --reupload --less-verbose $username:$password@$domain/public_html
+#wput --reupload --less-verbose $username:$password@$domain/public_html
 cd ..
 
 #-------------------------------------------------------------------------------
