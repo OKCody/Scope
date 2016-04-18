@@ -80,7 +80,7 @@ cd ..
 #yyyymmmdd_filename.html
 #prepending date to filename in this way forces most recent page to bottom of ls
 index=$(ls root/archive/*.html | tail -n1)
-mv $index root/index.html
+cp $index root/index.html
 
 sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
 #change path to /scope-style as it is different for index.html than it is for all other pages.
@@ -90,11 +90,58 @@ sed -i "s/..\/..\/style\/style.css/style\/style.css/g" root/index.html
 sed -i "s/..\/..\/style\/print.css/style\/print.css/g" root/index.html
 #-------------------------------------------------------------------------------
 
+#------------------------------Create Archive-----------------------------------
+echo "Building archive/index.html ..."
+
+cd site-content
+#building file from bottom up so that most recent page appears at top
+cat ../scope-template/tail.html > ../root/archive/index.html
+for filename in *.html
+do
+  month=${filename:4:2}
+  day=${filename:6:2}
+  year=${filename:0:4}
+  filename=${filename:9}
+  filename=${filename%.html}
+  address=$filename
+  filename=${filename//_/ }
+
+  if [ $month == "01" ]; then month="January"; fi
+  if [ $month == "02" ]; then month="February"; fi
+  if [ $month == "03" ]; then month="March"; fi
+  if [ $month == "04" ]; then month="April"; fi
+  if [ $month == "05" ]; then month="May"; fi
+  if [ $month == "06" ]; then month="June"; fi
+  if [ $month == "07" ]; then month="July"; fi
+  if [ $month == "08" ]; then month="August"; fi
+  if [ $month == "09" ]; then month="September"; fi
+  if [ $month == "10" ]; then month="October"; fi
+  if [ $month == "11" ]; then month="November"; fi
+  if [ $month == "12" ]; then month="December"; fi
+
+  echo -e "<br>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+  echo -e "<p class='archive'>$month $day, $year</p>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+  echo -e "<a href='$address'><h1 class='archive'>$filename</h1></a>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+
+done
+echo -e "$(cat ../scope-template/head.html)\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+cd ..
+
+sed -i "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
+#change path to /scope-style as it is different for archive/index.html than it is for all other pages.
+sed -i "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
+sed -i "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
+sed -i "s/..\/..\/style\/style.css/..\/style\/style.css/g" root/archive/index.html
+sed -i "s/..\/..\/style\/print.css/..\/style\/print.css/g" root/archive/index.html
+#-------------------------------------------------------------------------------
+
+
 #--------------------Prepare public-facing pages and PDFs-----------------------
 echo "Creating page directories; index.html and print.pdf for each..."
 
 cd root/archive
 numfiles=$(find -maxdepth 1 -type f | wc -l)
+let numfiles-=1
 currentfile=0
 for filename in [!index.html]*.html
 do
