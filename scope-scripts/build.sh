@@ -1,6 +1,17 @@
 #all commands are understood to be executed from root of site
 #loop are executed from within a given directory and exited upon completion
 
+#------------------------------Global Variables---------------------------------
+#for FTP purposes
+username=$1
+password=$2
+domain="codytaylor.cc"
+
+#for github
+pages="http://github.com/OKCody/Pages"
+#-------------------------------------------------------------------------------
+
+
 #--------------------------------Cleaning up------------------------------------
 echo "Cleaning up Scope/ ..."
 
@@ -15,7 +26,7 @@ mkdir root
 echo "Cloning Pages/ from Github..."
 
 #pull down most current version of all site entries
-git clone -q http://github.com/OKCody/Pages
+git clone -q $pages
 
 #rename cloned directory to fit schema
 mv Pages site-content
@@ -171,5 +182,16 @@ do
 done
 cd ../..
 #-------------------------------------------------------------------------------
+
+#-----------------------------------FTP-----------------------------------------
+echo "FTPing to server..."
+
+cd root
+#uploads files despite already existing on server
+wput --reupload --less-verbose $username:$password@$domain/public_html
+cd ..
+
+#-------------------------------------------------------------------------------
+
 
 echo "Done!"
