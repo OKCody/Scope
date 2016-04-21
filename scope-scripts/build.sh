@@ -216,11 +216,33 @@ cd ../..
 #-------------------------------------------------------------------------------
 
 #-----------------------------------FTP-----------------------------------------
-echo "FTPing to server..."
+echo "Uploading to server ..."
 
-cd root
-#uploads files despite already existing on server
-#wput --reupload --less-verbose ftp://$username:$password@$domain/public_html
+path=$(pwd)
+if [ ${path: -5} == "Scope" ];
+then
+ssh codyalantaylor@codytaylor.cc 'cd public_html; pwd; path=$(pwd);';
+rm -rf *;
+exit;
+cd root;
+echo $(pwd)
+zip -r zipfile.zip . -x ".*" -x "/.*";
+#Works to this point
+#search multiple ftp commands, one line
+#consider uploading file to root in one-line command then use SSH to move to
+#public_html
+ftp codyalantaylor@codytaylor.cc;
+cd public_html/;
+put zipfile.zip;
+exit;
+ssh codyalantaylor@codytaylor.cc;
+cd public_html;
+unzip zipfile.zip;
+rm zipfile.zip;
+exit;
+fi
+
+fi
 cd ..
 
 #-------------------------------------------------------------------------------
