@@ -94,7 +94,7 @@ cd ..
 index=$(ls root/archive/*.html | tail -n1)
 cp $index root/index.html
 
-sed -i "" "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
+sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
 #change path to /scope-style as it is different for index.html than it is for all other pages.
 #sed -i "" "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
 #sed -i "" "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
@@ -139,7 +139,7 @@ done
 echo -e "$(cat ../scope-template/head.html)\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
 cd ..
 
-sed -i "" "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
+sed -i "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
 #change path to /scope-style as it is different for archive/index.html than it is for all other pages.
 #sed -i "" "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
 #sed -i "" "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
@@ -203,7 +203,7 @@ do
   mv $filename $newname/index.html
   #find "<title></title>" in previously created file. replace with <title>$filename</title>
   #replace underscores with spaces and remove ".html" from end of filename
-  sed -i "" "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
+  sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
   #necessary because wkhtmltopdf won't use print.css otherwise
   #sed -i "" "s/..\/style\/style.css/..\/style\/print.css/g" $newname/index.html
   #wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
@@ -224,7 +224,7 @@ then
   cd root;
   zip -r zipfile.zip . -x ".*" -x "/.*";
   echo "Zipped site contents ..."
-  ftp -u ftp://codyalantaylor:122191Cat\!@codytaylor.cc/ zipfile.zip
+  scp zipfile.zip codyalantaylor@codytaylor.cc:.
   ssh codyalantaylor@codytaylor.cc 'rm -r public_html/*; mv zipfile.zip public_html/zipfile.zip; cd public_html; unzip zipfile.zip; rm zipfile.zip; exit;';
   cd ..
 else
