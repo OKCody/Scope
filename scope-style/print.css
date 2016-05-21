@@ -65,3 +65,7 @@ img,tr {page-break-inside: avoid;}
 .header, .menu{
   display:none;
 }
+
+#search, #menu, #archive{
+  display: none;
+}
