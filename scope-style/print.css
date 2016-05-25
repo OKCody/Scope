@@ -13,6 +13,7 @@ line-height: 1.45;
 font-family: Garamond,"Times New Roman", serif;
 color: #000;
 background: none;
+background-color: #FFF;
 font-size: 14pt; }
 
 /* Headings */
@@ -32,7 +33,7 @@ blockquote { margin: 1.2em; padding: 1em;  font-size: 12pt; }
 hr { background-color: #ccc; }
 
 /* Images */
-img { float: left; margin: 1em 1.5em 1.5em 0; max-width: 100% !important; }
+img {max-width: 450px !important; }
 a img { border: none; }
 
 /* Links */
@@ -42,8 +43,8 @@ a:link[href^="http://"]:after, a[href^="http://"]:visited:after { content: " (" 
 abbr[title]:after { content: " (" attr(title) ")"; }
 
 /* Don't show linked images  */
-a[href^="http://"] {color:#000; }
-a[href$=".jpg"]:after, a[href$=".jpeg"]:after, a[href$=".gif"]:after, a[href$=".png"]:after { content: " (" attr(href) ") "; display:none; }
+/*a[href^="http://"] {color:#000; }*/
+/*a[href$=".jpg"]:after, a[href$=".jpeg"]:after, a[href$=".gif"]:after, a[href$=".png"]:after { content: " (" attr(href) ") "; display:none; }*/
 
 /* Don't show links that are fragment identifiers, or use the `javascript:` pseudo protocol .. taken from html5boilerplate */
 a[href^="#"]:after, a[href^="javascript:"]:after {content: "";}

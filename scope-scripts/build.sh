@@ -1,5 +1,5 @@
 #all commands are understood to be executed from root of site
-#loop are executed from within a given directory and exited upon completion
+#loops are executed from within a given directory and exited upon completion
 
 #------------------------------Global Variables---------------------------------
 #for FTP purposes
@@ -180,6 +180,42 @@ cd ..
 
 #-------------------------------------------------------------------------------
 
+#-----------------------------Creating RSS File---------------------------------
+echo "Building RSS file..."
+
+cd site-content
+
+echo > ../root/feed.rss
+echo "<?xml version=\"1.0\" ?>" >> ../root/feed.rss
+echo "rss version=\"2.0\">" >> ../root/feed.rss
+echo "<channel>" >> ../root/feed.rss
+echo "<title>Cody Taylor</title>" >> ../root/feed.rss
+echo "<link>http://codytaylor.cc/feed.rss</link>" >> ../root/feed.rss
+echo "<description>Personal projects of Cody Taylor</description>" >> ../root/feed.rss
+
+
+for filename in *.html
+do
+  title=${filename:9}
+  title=${title%.html}
+  address=$title
+  title=${title//_/ }
+
+  text=$(sed -e 's/<[^>]*>//g' $filename)
+  text=$(echo $text|tr -d '\n')
+  text=$(echo $text|tr -d '"')
+
+  echo "<item>" >> ../root/feed.rss
+  echo "<tttle>$title</title>" >> ../root/feed.rss
+  echo "<link>http://codytaylor.cc/archive/$address/index.html</link>" >> ../root/feed.rss
+  echo "<description>${text:0:1000}</description>" >> ../root/feed.rss
+  echo "</item>" >> ../root/feed.rss
+done
+
+echo "</channel>" >> ../root/feed.rss
+echo "</rss>" >> ../root/feed.rss
+#-------------------------------------------------------------------------------
+
 #--------------------Prepare public-facing pages and PDFs-----------------------
 echo "Building page directories; index.html and print.pdf for each..."
 
@@ -205,9 +241,9 @@ do
   #replace underscores with spaces and remove ".html" from end of filename
   sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
   #necessary because wkhtmltopdf won't use print.css otherwise
-  sed -i "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
+#  sed -i "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
   #sed -i "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
-  wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking $newname/index.html $newname/print.pdf
+  wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf
   #The following is a hack to replace names of stylesheets to their proper form.
   #Prior is only so that wkhtmltopdf will use the print.css instead of style.css
 #  sed -i "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
