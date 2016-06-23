@@ -24,5 +24,5 @@ top-level-build
 search-build
 rss-build
 pages-build
-#server-upload
+server-upload
 echo "Done!"
