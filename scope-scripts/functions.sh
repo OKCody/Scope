@@ -31,7 +31,8 @@ markdown-html(){
   for filename in *.md
   do
   # pandoc -f markdown -t html -o ${filename%.md}.html $filename
-    perl ../scope-scripts/Markdown.pl $filename > ${filename%.md}.html
+  #  perl ../scope-scripts/Markdown.pl $filename > ${filename%.md}.html
+  scholdoc $filename -o ${filename%.md}.html
   done
   cd ..
 }
@@ -83,18 +84,18 @@ index-build(){
   done
   cd ..
 
-  #create index.html from most recent file in root/ based on date at front of filename
+  #create index.html from most recent file in root/ based -i '' on date at front of filename
   #yyyymmmdd_filename.html
   #prepending date to filename in this way forces most recent page to bottom of ls
   index=$(ls root/archive/*.html | tail -n1)
   cp $index root/index.html
 
-  sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
+  sed -i '' "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
   #change path to /scope-style as it is different for index.html than it is for all other pages.
-  #sed -i "" "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
-  #sed -i "" "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
-  #sed -i "" "s/..\/..\/style\/style.css/style\/style.css/g" root/index.html
-  #sed -i "" "s/..\/..\/style\/print.css/style\/print.css/g" root/index.html
+  #sed -i '' "" "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
+  #sed -i '' "" "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
+  #sed -i '' "" "s/..\/..\/style\/style.css/style\/style.css/g" root/index.html
+  #sed -i '' "" "s/..\/..\/style\/print.css/style\/print.css/g" root/index.html
 }
 #-------------------------------------------------------------------------------
 
@@ -136,12 +137,12 @@ archive-build(){
   echo -e "$(cat ../scope-template/head.html)\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
   cd ..
 
-  sed -i "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
+  sed -i '' "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
   #change path to /scope-style as it is different for archive/index.html than it is for all other pages.
-  #sed -i "" "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
-  #sed -i "" "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
-  #sed -i "" "s/..\/..\/style\/style.css/..\/style\/style.css/g" root/archive/index.html
-  #sed -i "" "s/..\/..\/style\/print.css/..\/style\/print.css/g" root/archive/index.html
+  #sed -i '' "" "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
+  #sed -i '' "" "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
+  #sed -i '' "" "s/..\/..\/style\/style.css/..\/style\/style.css/g" root/archive/index.html
+  #sed -i '' "" "s/..\/..\/style\/print.css/..\/style\/print.css/g" root/archive/index.html
 }
 #-------------------------------------------------------------------------------
 
@@ -165,14 +166,14 @@ search-build(){
     address=$filename
     filename=${filename//_/ }
 
-    text=$(sed -e 's/<[^>]*>//g' $longfilename)
+    text=$(sed -i '' -e 's/<[^>]*>//g' $longfilename)
     text=$(echo $text|tr -d '\n')
     text=$(echo $text|tr -d '"')
 
     echo "   {\"title\": \"$filename\", \"text\": \"$text\", \"tags\": \"\", \"url\": \"http://$domain/archive/$address\"}," >> ../root/tipuesearch/tipuesearch_content.js
   done
 
-  echo "$(sed '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
+  echo "$(sed -i '' '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
   echo "]};" >> ../root/tipuesearch/tipuesearch_content.js
 
   cd ..
@@ -216,7 +217,7 @@ rss-build(){
     if [ $month == "11" ]; then month="Nov"; fi
     if [ $month == "12" ]; then month="Dec"; fi
 
-    text=$(sed -e 's/<[^>]*>//g' $filename)
+    text=$(sed -i '' -e 's/<[^>]*>//g' $filename)
     text=$(echo $text|tr -d '\n')
     text=$(echo $text|tr -d '"')
 
@@ -260,15 +261,15 @@ pages-build(){
     mv $filename $newname/index.html
     #find "<title></title>" in previously created file. replace with <title>$filename</title>
     #replace underscores with spaces and remove ".html" from end of filename
-    sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
+    sed -i '' "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
     #necessary because wkhtmltopdf won't use print.css otherwise
-  #  sed -i "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
-    #sed -i "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
+  #  sed -i '' "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
+    #sed -i '' "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
     wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf
     #The following is a hack to replace names of stylesheets to their proper form.
     #Prior is only so that wkhtmltopdf will use the print.css instead of style.css
-  #  sed -i "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
-  #  sed -i "s/\/style\/style.css media=/\/style\/print.css media=/g" $newname/index.html
+  #  sed -i '' -i '' "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
+  #  sed -i '' -i '' "s/\/style\/style.css media=/\/style\/print.css media=/g" $newname/index.html
   done
   cd ../..
 }
