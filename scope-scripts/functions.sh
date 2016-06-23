@@ -146,6 +146,30 @@ archive-build(){
 }
 #-------------------------------------------------------------------------------
 
+#--------------------------Create Top-Level Pages-------------------------------
+#does not currently get indexed by search
+#perhaps it should in the future
+top-level-build(){
+  echo "Building top-level pages ..."
+
+  #convert top-level markdown content to html
+  cd site-content/top-level
+  for filename in *.md
+  do
+    scholdoc $filename -o ${filename%.md}.html
+  done
+
+  for filename in *.html
+  do
+    #concatenate contents of head.html, $filename.html, and tail.html and write to
+    #file in top-level directory
+    echo > ../../$filename
+    cat ../../scope-template/head.html $filename ../../scope-template/tail.html > ../../root/$filename
+  done
+  cd ../../
+}
+#-------------------------------------------------------------------------------
+
 #---------------------------Creating Search Index-------------------------------
 search-build(){
   echo "Building search index and search results page..."
@@ -263,7 +287,7 @@ pages-build(){
     #replace underscores with spaces and remove ".html" from end of filename
     sed -i '' "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
     #necessary because wkhtmltopdf won't use print.css otherwise
-  #  sed -i '' "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
+    #sed -i '' "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
     #sed -i '' "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
     wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf
     #The following is a hack to replace names of stylesheets to their proper form.
