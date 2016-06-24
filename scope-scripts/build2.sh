@@ -6,12 +6,18 @@ source scope-scripts/functions.sh
 
 #------------------------------Global Variables---------------------------------
 #for FTP purposes
-username=$1
-password=$2
 domain="codytaylor.cc"
 
 #for github
 pages="http://github.com/OKCody/Pages"
+
+#necessary in order to pass command line option to function call in "sourced" file
+if [ "$1" == "-pdf" ] || [ "$2" == "-pdf" ];
+then
+  let pdf="1";
+else
+  let pdf="0";
+fi
 #-------------------------------------------------------------------------------
 
 scope-clean
@@ -24,5 +30,10 @@ top-level-build
 search-build
 rss-build
 pages-build
-server-upload
+if [ "$1" == "-u" ] || [ "$2" == "-u" ];
+then
+  server-upload;
+else
+  echo "Use -u to upload to server";
+fi
 echo "Done!"

@@ -12,7 +12,7 @@ scope-clean(){
 
 #--------------------------Clone pages from GitHub------------------------------
 github-clone() {
-  echo "Cloning Pages/ from Github..."
+  echo "Cloning Pages/ from Github ..."
 
   #pull down most current version of all site entries
   git clone -q $pages
@@ -40,7 +40,7 @@ markdown-html(){
 
 #---------------------------Root directory prep.--------------------------------
 dependence-copy(){
-  echo "Copying dependent files into root directory..."
+  echo "Copying dependent files into root directory ..."
   #copy style and images from Scope/ into root/ to be pushed to server
   mkdir root/style
   mkdir root/scope-images
@@ -172,7 +172,7 @@ top-level-build(){
 
 #---------------------------Creating Search Index-------------------------------
 search-build(){
-  echo "Building search index and search results page..."
+  echo "Building search index and search results page ..."
 
   mkdir root/tipuesearch
   cp -r tipuesearch/. root/tipuesearch/
@@ -206,7 +206,7 @@ search-build(){
 
 #-----------------------------Creating RSS File---------------------------------
 rss-build(){
-  echo "Building RSS file..."
+  echo "Building RSS file ..."
 
   cd site-content
 
@@ -263,7 +263,7 @@ rss-build(){
 
 #--------------------Prepare public-facing pages and PDFs-----------------------
 pages-build(){
-  echo "Building page directories; index.html and print.pdf for each..."
+  echo "Building page directories and index.html files. Use --pdf to generate PDFs ..."
 
   cd root/archive
   numfiles=$(find . -type f| wc -l)
@@ -289,7 +289,11 @@ pages-build(){
     #necessary because wkhtmltopdf won't use print.css otherwise
     #sed -i '' "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
     #sed -i '' "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
-    wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf
+    #requires explicit instruction to generate PDFs
+    if [ "$pdf" == "1" ] ;
+    then
+      wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf;
+    fi
     #The following is a hack to replace names of stylesheets to their proper form.
     #Prior is only so that wkhtmltopdf will use the print.css instead of style.css
   #  sed -i '' -i '' "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
