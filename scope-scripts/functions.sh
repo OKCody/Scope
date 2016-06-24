@@ -129,12 +129,12 @@ archive-build(){
     if [ $month == "11" ]; then month="November"; fi
     if [ $month == "12" ]; then month="December"; fi
 
-    echo -e "<br>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+    echo -e "\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
     echo -e "<p class='archive'>$month $day, $year</p>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
-    echo -e "<a href='$address'><h3 class='archive'>$filename</h3></a>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+    echo -e "<a href='$address'><h2 class='archive'>$filename</h2></a>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
 
   done
-  echo -e "$(cat ../scope-template/head.html)\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+  echo -e "$(cat ../scope-template/head.html)\n<h1 style='margin-bottom: 60px;'>Archive</h1>$(cat ../root/archive/index.html)" > ../root/archive/index.html
   cd ..
 
   sed -i '' "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
@@ -305,19 +305,24 @@ pages-build(){
 
 #-----------------------------------FTP-----------------------------------------
 server-upload(){
-  echo "Uploading to server ..."
-
-  path=$(pwd)
-  if [ ${path: -5} == "Scope" ];
+  #requires -u flag in order to automatically upload to server
+  if [ $upload == "1" ];
   then
-    cd root;
-    zip -r zipfile.zip . -x ".*" -x "/.*";
-    echo "Zipped site contents ..."
-    scp zipfile.zip codyalantaylor@codytaylor.cc:.
-    ssh codyalantaylor@codytaylor.cc 'rm -r public_html/*; mv zipfile.zip public_html/zipfile.zip; cd public_html; unzip zipfile.zip; rm zipfile.zip; exit;';
-    cd ..
+    echo "Uploading to server ..."
+    path=$(pwd)
+    if [ ${path: -5} == "Scope" ];
+    then
+      cd root;
+      zip -r zipfile.zip . -x ".*" -x "/.*";
+      echo "Zipped site contents ..."
+      scp zipfile.zip $username@$domain:.
+      ssh $username@$domain 'rm -r public_html/*; mv zipfile.zip public_html/zipfile.zip; cd public_html; unzip zipfile.zip; rm zipfile.zip; exit;';
+      cd ..
+    else
+      echo "Upload failed: be sure to execute from root of Scope/"
+    fi
   else
-    echo "Upload failed: be sure to execute from root of Scope/"
+    echo "Use -u to upload to server";
   fi
 }
 #-------------------------------------------------------------------------------
