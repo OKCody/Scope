@@ -263,4 +263,12 @@ ____________________________________________________ */
 .archive{
   margin-top:-30px;
 }
+
+.archive-title{
+  margin-top: -30px;
+  font-weight: 300;
+  font-size: 1.375em;
+  /* 1.375x body copy size = 22px */
+  line-height: 1.13636364;
+}
 /*__________________________________________________ */

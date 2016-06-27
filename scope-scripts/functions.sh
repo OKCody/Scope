@@ -131,7 +131,7 @@ archive-build(){
 
     echo -e "\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
     echo -e "<p class='archive'>$month $day, $year</p>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
-    echo -e "<a href='$address'><h2 class='archive'>$filename</h2></a>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
+    echo -e "<a href='$address'><h2 class='archive-title'>$filename</h2></a>\n$(cat ../root/archive/index.html)" > ../root/archive/index.html
 
   done
   echo -e "$(cat ../scope-template/head.html)\n<h1 style='margin-bottom: 60px;'>Archive</h1>$(cat ../root/archive/index.html)" > ../root/archive/index.html
@@ -177,9 +177,10 @@ search-build(){
   mkdir root/tipuesearch
   cp -r tipuesearch/. root/tipuesearch/
   cp root/tipuesearch/search.html root/search.html
+  #echo " - Directories reated!"
 
   echo "var tipuesearch = {\"pages\": [" > root/tipuesearch/tipuesearch_content.js
-
+  #echo " - Empty file created!"
   cd site-content
 
   for filename in *.html
@@ -190,14 +191,14 @@ search-build(){
     address=$filename
     filename=${filename//_/ }
 
-    text=$(sed -i '' -e 's/<[^>]*>//g' $longfilename)
+    text=$(sed -e 's/<[^>]*>//g' $longfilename)
     text=$(echo $text|tr -d '\n')
     text=$(echo $text|tr -d '"')
 
     echo "   {\"title\": \"$filename\", \"text\": \"$text\", \"tags\": \"\", \"url\": \"http://$domain/archive/$address\"}," >> ../root/tipuesearch/tipuesearch_content.js
   done
 
-  echo "$(sed -i '' '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
+  echo "$(sed '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
   echo "]};" >> ../root/tipuesearch/tipuesearch_content.js
 
   cd ..
