@@ -16,7 +16,7 @@ pages="http://github.com/OKCody/Pages"
 
 #necessary in order to pass command line option to function call in "sourced" file
 #Surely this can be done in a more elegant way.
-if [ "$1" == "-pdf" ] || [ "$2" == "-pdf" ];
+if [ "$1" == "--pdf" ] || [ "$2" == "--pdf" ];
 then
   let pdf="1";
 else

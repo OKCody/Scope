@@ -293,7 +293,10 @@ pages-build(){
     #requires explicit instruction to generate PDFs
     if [ "$pdf" == "1" ] ;
     then
-      wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf;
+      scholdoc -H ../../scope-style/print.css $newname/index.html -o $newname/temp.html
+      wkhtmltopdf --quiet $newname/temp.html $newname/print.pdf
+      #rm temp.html
+      #wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf;
     fi
     #The following is a hack to replace names of stylesheets to their proper form.
     #Prior is only so that wkhtmltopdf will use the print.css instead of style.css

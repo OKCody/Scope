@@ -1,3 +1,4 @@
+<style>
 /* --------------------------------------------------------------
 
  Hartija Css Print  Framework
@@ -6,7 +7,10 @@
 -------------------------------------------------------------- */
 
 body {
-width:100% !important;
+/*width:100% !important;*/
+/*width: 12in;*/
+/*position: relative;
+left: -.25in;*/
 margin:0 !important;
 padding:0 !important;
 line-height: 1.45;
@@ -63,10 +67,16 @@ img,tr {page-break-inside: avoid;}
 #header, #footer, #navigation, #rightSideBar, #leftSideBar
 {display:none;}
 */
-.header, .menu{
+.header, .menu, .rss.{
   display:none;
+}
+
+footer{
+  display: none;
 }
 
 #search, #menu, #archive{
   display: none;
 }
+
+</style>
