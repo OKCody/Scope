@@ -294,7 +294,7 @@ pages-build(){
     if [ "$pdf" == "1" ] ;
     then
       scholdoc -H ../../scope-style/print.css $newname/index.html -o $newname/temp.html
-      wkhtmltopdf --quiet $newname/temp.html $newname/print.pdf
+      wkhtmltopdf --quiet --javascript-delay 1000 $newname/temp.html $newname/print.pdf
       #rm temp.html
       #wkhtmltopdf --quiet --viewport-size 1280x1024 --disable-smart-shrinking --user-style-sheet ../style/print.css $newname/index.html $newname/print.pdf;
     fi
