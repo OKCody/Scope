@@ -67,7 +67,7 @@ img,tr {page-break-inside: avoid;}
 #header, #footer, #navigation, #rightSideBar, #leftSideBar
 {display:none;}
 */
-.header, .menu, .rss.{
+.header, .menu, .rss, .rss:hover, a.rss{
   display:none;
 }
 

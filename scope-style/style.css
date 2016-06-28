@@ -113,6 +113,13 @@ body{
     border: none;
     float: left;
 }
+
+#pdf{
+    width: 20px;
+    margin-bottom: 10px;
+    position: relative;
+    float: left;
+}
 /*–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 
