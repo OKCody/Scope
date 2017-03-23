@@ -156,7 +156,8 @@ top-level-build(){
   cd site-content/top-level
   for filename in *.md
   do
-    scholdoc $filename -o ${filename%.md}.html
+    pandoc $filename -o ${filename%.md}.html
+    # scholdoc $filename -o ${filename%.md}.html
   done
 
   for filename in *.html
