@@ -30,9 +30,9 @@ markdown-html(){
   #run markdown.pl script to convert .md files to .html
   for filename in *.md
   do
-  # pandoc -f markdown -t html -o ${filename%.md}.html $filename
+  pandoc -f markdown -t html -o ${filename%.md}.html $filename
   #  perl ../scope-scripts/Markdown.pl $filename > ${filename%.md}.html
-  scholdoc $filename -o ${filename%.md}.html
+  # scholdoc $filename -o ${filename%.md}.html
   done
   cd ..
 }
