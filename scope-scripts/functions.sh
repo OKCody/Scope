@@ -90,7 +90,7 @@ index-build(){
   index=$(ls root/archive/*.html | tail -n1)
   cp $index root/index.html
 
-  sed -i '' "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
+  sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
   #change path to /scope-style as it is different for index.html than it is for all other pages.
   #sed -i '' "" "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
   #sed -i '' "" "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
@@ -137,7 +137,7 @@ archive-build(){
   echo -e "$(cat ../scope-template/head.html)\n<h1 style='margin-bottom: 60px;'>Archive</h1>$(cat ../root/archive/index.html)" > ../root/archive/index.html
   cd ..
 
-  sed -i '' "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
+  sed -i "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
   #change path to /scope-style as it is different for archive/index.html than it is for all other pages.
   #sed -i '' "" "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
   #sed -i '' "" "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
@@ -286,7 +286,7 @@ pages-build(){
     mv $filename $newname/index.html
     #find "<title></title>" in previously created file. replace with <title>$filename</title>
     #replace underscores with spaces and remove ".html" from end of filename
-    sed -i '' "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
+    sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
     #necessary because wkhtmltopdf won't use print.css otherwise
     #sed -i '' "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
     #sed -i '' "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
@@ -306,6 +306,13 @@ pages-build(){
   cd ../..
 }
 #-------------------------------------------------------------------------------
+
+#-----------------------------------Move----------------------------------------
+server-move(){
+  mv root/ ~/../../var/www/html
+}
+#-------------------------------------------------------------------------------
+
 
 #-----------------------------------FTP-----------------------------------------
 server-upload(){
