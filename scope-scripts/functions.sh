@@ -243,7 +243,7 @@ rss-build(){
     if [ $month == "11" ]; then month="Nov"; fi
     if [ $month == "12" ]; then month="Dec"; fi
 
-    text=$(sed -i '' -e 's/<[^>]*>//g' $filename)
+    text=$(sed -i -e 's/<[^>]*>//g' $filename)
     text=$(echo $text|tr -d '\n')
     text=$(echo $text|tr -d '"')
 
@@ -310,7 +310,7 @@ pages-build(){
 
 #-----------------------------------Move----------------------------------------
 server-move(){
-  mv root/ ~/../../var/www/html
+  mv root/* ~/../../var/www/html
 }
 #-------------------------------------------------------------------------------
 
