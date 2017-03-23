@@ -42,5 +42,5 @@ top-level-build
 search-build
 rss-build
 pages-build
-server-move;
+server-move
 echo "Done!"
