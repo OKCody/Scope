@@ -177,7 +177,7 @@ body{
 }
 
 #sa{
-    display: block;
+    display: none;
     background: url(../scope-images/license/sa.svg);
 }
 
