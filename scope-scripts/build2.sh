@@ -14,7 +14,7 @@ username="codyalantaylor"
 #page content to pull down from GitHub
 pages="http://github.com/OKCody/Pages"
 
-site_root="~/../../var/www/html/"
+site_root="../../../var/www/html/"
 
 #necessary in order to pass command line option to function call in "sourced" file
 #Surely this can be done in a more elegant way.
