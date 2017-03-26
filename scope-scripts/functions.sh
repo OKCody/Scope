@@ -78,9 +78,37 @@ index-build(){
   cd site-content
   for filename in *.html
   do
+    month=${filename:4:2}
+    day=${filename:6:2}
+    year=${filename:0:4}
+    title=${filename:9}
+    title=${title%.html}
+    address=$title
+    title=${title//_/ }
+
+    if [ $month == "01" ]; then month="Jan"; fi
+    if [ $month == "02" ]; then month="Feb"; fi
+    if [ $month == "03" ]; then month="Mar"; fi
+    if [ $month == "04" ]; then month="Apr"; fi
+    if [ $month == "05" ]; then month="May"; fi
+    if [ $month == "06" ]; then month="Jun"; fi
+    if [ $month == "07" ]; then month="Jul"; fi
+    if [ $month == "08" ]; then month="Aug"; fi
+    if [ $month == "09" ]; then month="Sep"; fi
+    if [ $month == "10" ]; then month="Oct"; fi
+    if [ $month == "11" ]; then month="Nov"; fi
+    if [ $month == "12" ]; then month="Dec"; fi
+
+    title="<h1>$title</h1>"
+    date="<p>$month $day, $year</p>"
+
     #concatenate contents of head.html, $filename.html, and tail.html and write to
     #file in archive directory
-    cat ../scope-template/head.html $filename ../scope-template/tail.html > ../root/archive/$filename
+    cat ../scope-template/head.html > ../root/archive/$filename
+    echo $title >> ../root/archive/$filename
+    echo $date >> ../root/archive/$filename
+    cat $filename >> ../root/archive/$filename
+    cat ../scope-template/tail.html >> ../root/archive/$filename
   done
   cd ..
 
@@ -90,7 +118,12 @@ index-build(){
   index=$(ls root/archive/*.html | tail -n1)
   cp $index root/index.html
 
-  sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
+  if [ $OSTYPE == "linux-gnu" ];
+  then
+    sed -i "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
+  else
+    sed -i '' "s/<title><\/title>/<title>Cody Taylor<\/title>/g ; s/.html<\/title>/<\/title>/g" root/index.html
+  fi
   #change path to /scope-style as it is different for index.html than it is for all other pages.
   #sed -i '' "" "s/..\/..\/style\/normalize.css/style\/normalize.css/g" root/index.html
   #sed -i '' "" "s/..\/..\/style\/skeleton.css/style\/skeleton.css/g" root/index.html
@@ -137,7 +170,13 @@ archive-build(){
   echo -e "$(cat ../scope-template/head.html)\n<h1 style='margin-bottom: 60px;'>Archive</h1>$(cat ../root/archive/index.html)" > ../root/archive/index.html
   cd ..
 
-  sed -i "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
+  if [ $OSTYPE == "linux-gnu" ];
+  then
+    sed -i "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
+  else
+    sed -i '' "s/<title><\/title>/<title>Archive<\/title>/g ; s/.html<\/title>/<\/title>/g" root/archive/index.html
+  fi
+
   #change path to /scope-style as it is different for archive/index.html than it is for all other pages.
   #sed -i '' "" "s/..\/..\/style\/normalize.css/..\/style\/normalize.css/g" root/archive/index.html
   #sed -i '' "" "s/..\/..\/style\/skeleton.css/..\/style\/skeleton.css/g" root/archive/index.html
@@ -199,8 +238,14 @@ search-build(){
     echo "   {\"title\": \"$filename\", \"text\": \"$text\", \"tags\": \"\", \"url\": \"http://$domain/archive/$address\"}," >> ../root/tipuesearch/tipuesearch_content.js
   done
 
-  echo "$(sed '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
-  echo "]};" >> ../root/tipuesearch/tipuesearch_content.js
+  if [ $OSTYPE == "linux-gnu" ];
+  then
+    echo "$(sed '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
+    echo "]};" >> ../root/tipuesearch/tipuesearch_content.js
+  else
+    echo "$(sed '$ s/.$//' ../root/tipuesearch/tipuesearch_content.js)" > ../root/tipuesearch/tipuesearch_content.js
+    echo "]};" >> ../root/tipuesearch/tipuesearch_content.js
+  fi
 
   cd ..
 }
@@ -287,7 +332,12 @@ pages-build(){
     mv $filename $newname/index.html
     #find "<title></title>" in previously created file. replace with <title>$filename</title>
     #replace underscores with spaces and remove ".html" from end of filename
-    sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
+    if [ $OSTYPE == "linux-gnu" ];
+    then
+      sed -i "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
+    else
+      sed -i '' "s/<title><\/title>/<title>${newname//_/ }<\/title>/g ; s/.html<\/title>/<\/title>/g" $newname/index.html
+    fi
     #necessary because wkhtmltopdf won't use print.css otherwise
     #sed -i '' "s/\/style\/style.css/\/style\/print.css/g" $newname/index.html
     #sed -i '' "s/\/style\/print.css/\/style\/style.css/g" $newname/index.html
