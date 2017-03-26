@@ -14,6 +14,8 @@ username="codyalantaylor"
 #page content to pull down from GitHub
 pages="http://github.com/OKCody/Pages"
 
+site_root="~/../../var/www/html/"
+
 #necessary in order to pass command line option to function call in "sourced" file
 #Surely this can be done in a more elegant way.
 if [ "$1" == "--pdf" ] || [ "$2" == "--pdf" ];
@@ -42,5 +44,5 @@ top-level-build
 search-build
 rss-build
 pages-build
-#server-move
+server-move
 echo "Done!"

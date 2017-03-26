@@ -1,4 +1,4 @@
-#--------------------------------Cleaning up------------------------------------
+#-----------------------------Cleaning up Scope---------------------------------
 scope-clean(){
   echo "Cleaning up Scope/ ..."
 
@@ -9,6 +9,18 @@ scope-clean(){
   mkdir root
 }
 #-------------------------------------------------------------------------------
+
+#-----------------------------Cleaning up Site----------------------------------
+site-clean(){
+  echo "Cleaning up Site/ ..."
+
+  cd $site_root
+  #remove all files from site's root directory except images/ and legacy-images/
+  rm -rf $(ls -I images -I legacy-images)
+  cd ~/Scope
+}
+#-------------------------------------------------------------------------------
+
 
 #--------------------------Clone pages from GitHub------------------------------
 github-clone() {
@@ -360,7 +372,16 @@ pages-build(){
 
 #-----------------------------------Move----------------------------------------
 server-move(){
-  mv root/* ~/../../var/www/html
+  echo "Cleaning site root ..."
+
+  cd $site_root
+  #remove all files from site's root directory except images/ and legacy-images/
+  rm -rf $(ls -I images -I legacy-images)
+  cd ~/Scope
+
+  echo "Moving files to site root ..."
+
+  mv root/* $site_root
 }
 #-------------------------------------------------------------------------------
 
