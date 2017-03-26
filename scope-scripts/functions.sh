@@ -111,8 +111,8 @@ index-build(){
     if [ $month == "11" ]; then month="Nov"; fi
     if [ $month == "12" ]; then month="Dec"; fi
 
-    title="<h1>$title</h1>"
-    date="<p>$month $day, $year</p>"
+    title="<h1 class=\"title\">$title</h1>"
+    date="<p class=\"date\">$month $day, $year</p>"
 
     #concatenate contents of head.html, $filename.html, and tail.html and write to
     #file in archive directory

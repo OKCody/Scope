@@ -241,7 +241,7 @@ body{
 
 
 
-/* Images
+/* General
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 img{
     display: block;
@@ -250,6 +250,15 @@ img{
     margin-right: auto;
     margin-top: 25px;
     margin-bottom: 25px;
+}
+
+caption{
+    text-align: center;
+    font-style: italic;
+}
+
+title{
+  margin-bottom: -1rem;
 }
 /*–––––––––––––––––––––––––––––––––––––––––––––––––– */
 
