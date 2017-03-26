@@ -252,12 +252,12 @@ img{
     margin-bottom: 25px;
 }
 
-caption{
+.caption{
     text-align: center;
     font-style: italic;
 }
 
-title{
+.title{
   margin-bottom: -1rem;
 }
 /*–––––––––––––––––––––––––––––––––––––––––––––––––– */
